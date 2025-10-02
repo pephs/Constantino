@@ -1,0 +1,1 @@
+Meu site já contava com uma estrutura CSS previamente definida, então realizei apenas algumas melhorias pontuais, como a inclusão do logotipo, favicon, barra de pesquisa e um carrinho funcional (exceto a parte de banco de dados). Aproveitei a oportunidade para publicá-lo no GitHub Pages, disponível em: https://pephs.github.io/constantine/”

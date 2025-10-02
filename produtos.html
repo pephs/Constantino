@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos - Constantine</title>
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+ <style>
+    :root {
+      --primary-color: #0dcaf0;
+      --dark-bg: #0f0f0f;
+      --gradient-bg: linear-gradient(135deg, #0f0f0f, #1f1f1f, #0f0f0f); 
+      --card-bg: #1e1e1e;
+      --text-light: #f8f9fa;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('background-img.png') no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      color: var(--text-light);
+      scroll-behavior: smooth;
+    }
+    .navbar { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); transition: background-color 0.3s ease; }
+    .navbar.scrolled { background-color: rgba(0, 0, 0, 0.85); }
+    .navbar-brand img { height: 80px; }
+    .product-card { background-color: var(--card-bg); border-radius: 15px; border: 1px solid #333; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 0 20px rgba(13, 202, 240, 0.4); }
+    #back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: var(--primary-color); border: none; border-radius: 50%; width: 45px; height: 45px; display: none; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; z-index: 999; }
+
+    .product-card .card-title { color: var(--text-light) !important; }
+    .product-card .card-body, .product-card .card-body p { color: var(--text-light) !important; }
+    .product-card img { border-radius: 10px; object-fit: cover; height: 220px; width: 100%; }
+</style>
+</head>
+<body>
+
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container d-flex align-items-center">
+      <a class="navbar-brand d-flex align-items-center" href="index.html"><img src="logo-constantine.png" alt="Logo Constantine"></a>
+
+      <!-- TOGGLER -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+          <li class="nav-item"><a class="nav-link active" href="produtos.html">Produtos</a></li>
+          <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+        </ul>
+        <form class="d-flex me-3" id="search-form">
+          <input class="form-control me-2" id="search-input" type="search" placeholder="Pesquisar produtos...">
+          <button class="btn btn-outline-info" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+        <ul class="navbar-nav ms-auto flex-row">
+          <li class="nav-item mx-2"><a class="nav-link fs-4" href="#"><i class="bi bi-person-circle"></i></a></li>
+          <li class="nav-item mx-2"><a class="nav-link fs-4 position-relative" href="#" id="open-cart"><i class="bi bi-cart3"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="cart-count">0</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="container my-5">
+  <h1 class="text-center display-4 fw-bold mb-5">Nossos Produtos</h1>
+
+  <ul class="nav nav-pills nav-fill mb-5" id="productTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active btn-outline-info" id="tab-all" data-bs-toggle="tab" data-category="Todos" type="button">Todos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-outline-info" id="tab-pcs" data-bs-toggle="tab" data-category="PC Gamer" type="button">PCs Gamer</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-outline-info" id="tab-mouse" data-bs-toggle="tab" data-category="Mouse" type="button">Mouses</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-outline-info" id="tab-teclado" data-bs-toggle="tab" data-category="Teclado" type="button">Teclados</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-outline-info" id="tab-gabinete" data-bs-toggle="tab" data-category="Gabinete" type="button">Gabinetes</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link btn-outline-info" id="tab-headset" data-bs-toggle="tab" data-category="Headset" type="button">Headsets/Mousepads</button>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="products-content" role="tabpanel">
+      <div id="lista-produtos" class="row g-4">
+        </div>
+    </div>
+  </div>
+</main>
+
+<div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="modal-product-name"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-product-image" class="img-fluid rounded mb-3" alt="Produto">
+        <p id="modal-product-description"></p>
+        <h4 class="text-info" id="modal-product-price"></h4>
+        <button class="btn btn-info w-100 mt-3" id="add-to-cart-btn">Adicionar ao Carrinho</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Seu Carrinho</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="cart-items"></div>
+      <div class="modal-footer">
+        <h5 class="me-auto">Total: R$ <span id="cart-total">0,00</span></h5>
+        <button class="btn btn-outline-light" data-bs-dismiss="modal">Fechar</button>
+        <button class="btn btn-info">Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="back-to-top"><i class="bi bi-arrow-up"></i></button>
+
+<footer class="pt-5 pb-4">
+  <div class="container">
+    <p class="text-center text-muted">© 2025 Constantine - Todos os direitos reservados</p>
+  </div>
+</footer>
+
+<script>
+  const products = [
+    // PC GAMER
+    { id: 1, category: 'PC Gamer', name: 'PC Gamer Ryzen 5 + GTX 1660', price: 4500.00, description: 'Ideal para jogos em Full HD. Performance sólida.', image: 'Pc ryzen 5.png' },
+    { id: 2, category: 'PC Gamer', name: 'PC Gamer i7 + RTX 3070', price: 8999.00, description: 'Desempenho extremo para games e trabalho pesado.', image: 'Pc ryzen 7.png' },
+    
+    // MOUSES
+    { id: 3, category: 'Mouse', name: 'Mouse Gamer RGB T-Dagger', price: 120.00, description: 'Mouse com sensor óptico de 12000 DPI e iluminação RGB.', image: 'mouse.png' },
+    { id: 4, category: 'Mouse', name: 'Mouse Sem Fio Logitech', price: 180.00, description: 'Design ergonômico para longas sessões de uso.', image: 'mouse-logitech.png' },
+
+    // TECLADOS
+    { id: 5, category: 'Teclado', name: 'Teclado Mecânico HyperX', price: 550.00, description: 'Switches táteis para resposta rápida em jogos.', image: 'teclado.png' },
+    { id: 6, category: 'Teclado', name: 'Teclado Membrana Multimídia', price: 90.00, description: 'Teclado silencioso e resistente para uso diário.', image: 'teclado-membrana.png' },
+    
+    // GABINETES
+    { id: 7, category: 'Gabinete', name: 'Gabinete Mid-Tower Vidro Temperado', price: 400.00, description: 'Fluxo de ar otimizado e painel lateral em vidro.', image: 'gabinete.png' },
+    { id: 8, category: 'Gabinete', name: 'Gabinete Full-Tower RGB', price: 750.00, description: 'Amplo espaço interno e iluminação RGB controlável.', image: 'gabinete-rgb.png' },
+
+    // HEADSETS e MOUSEPADS (Unificados na mesma aba como solicitado)
+    { id: 9, category: 'Headset', name: 'Headset Gamer 7.1 Surround', price: 299.00, description: 'Áudio posicional para vantagem competitiva.', image: 'headset.png' },
+    { id: 10, category: 'Headset', name: 'Mousepad Grande Speed', price: 65.00, description: 'Superfície de baixa fricção para movimentos rápidos do mouse.', image: 'mousepad.png' }
+  ];
+
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = document.getElementById('cart-count');
+
+  function updateCartCount() { cartCount.textContent = cart.length; }
+  function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); }
+  document.querySelectorAll('#productTabs button').forEach(button => {
+    button.addEventListener('click', function() {
+        const category = this.getAttribute('data-category');
+        document.getElementById('search-input').value = '';
+        renderProducts('', category);
+    });
+  });
+  document.getElementById('search-input').addEventListener('input', e => {
+      const activeTab = document.querySelector('#productTabs button.active');
+      const activeCategory = activeTab ? activeTab.getAttribute('data-category') : 'Todos'; 
+      renderProducts(e.target.value, activeCategory);
+  });
+  renderProducts('', 'Todos');
+  function renderProducts(filter = '', category = 'Todos') { 
+    const container = document.getElementById('lista-produtos');
+    container.innerHTML = '';
+    let filteredProducts = products.filter(p => {
+      const categoryMatch = category === 'Todos' || p.category === category;
+      const searchMatch = p.name.toLowerCase().includes(filter.toLowerCase());
+      return categoryMatch && searchMatch; 
+    });
+
+    if (filteredProducts.length === 0) {
+        container.innerHTML = `<div class="col-12"><p class="text-center text-muted fs-5">Nenhum produto encontrado nesta categoria ou busca.</p></div>`;
+        return;
+    }
+
+    filteredProducts.forEach(product => {
+      const div = document.createElement('div');
+      div.className = 'col-lg-3 col-md-6';
+      div.innerHTML = `
+        <div class="card product-card h-100 p-2">
+          <img src="${product.image}" class="card-img-top" alt="${product.name}">
+          <div class="card-body d-flex flex-column text-center">
+            <h5 class="card-title">${product.name}</h5>
+            <p class="mb-2">${product.description}</p>
+            <p class="text-info fw-bold">R$ ${product.price.toLocaleString('pt-BR', {minimumFractionDigits:2})}</p>
+            <button class="btn btn-outline-info mt-auto" data-bs-toggle="modal" data-bs-target="#productModal" data-id="${product.id}">Ver Detalhes</button>
+          </div>
+        </div>`;
+      container.appendChild(div);
+    });
+  }
+  document.querySelectorAll('#productTabs button').forEach(button => {
+    button.addEventListener('click', function() {
+        const category = this.getAttribute('data-category');
+        document.getElementById('search-input').value = '';
+        renderProducts('', category);
+    });
+  });
+
+
+  document.getElementById('search-input').addEventListener('input', e => {
+      const activeTab = document.querySelector('#productTabs button.active');
+      // Pega a categoria da aba ativa, ou usa 'Todos' como padrão
+      const activeCategory = activeTab ? activeTab.getAttribute('data-category') : 'Todos'; 
+      renderProducts(e.target.value, activeCategory);
+  });
+  
+  renderProducts('', 'Todos');
+
+  function renderCart() {
+    const container = document.getElementById('cart-items');
+    container.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += item.price;
+      container.innerHTML += `<div class='d-flex justify-content-between align-items-center mb-3'>
+        <span>${item.name}</span>
+        <span>R$ ${item.price.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>
+        <button class='btn btn-sm btn-danger' onclick='removeFromCart(${index})'><i class="bi bi-trash"></i></button>
+      </div>`;
+    });
+    if(cart.length === 0) container.innerHTML = '<p class="text-center text-muted">Seu carrinho está vazio.</p>';
+    document.getElementById('cart-total').textContent = total.toLocaleString('pt-BR',{minimumFractionDigits:2});
+  }
+
+  function removeFromCart(index){ cart.splice(index, 1); saveCart(); renderCart(); }
+
+  document.getElementById('search-input').addEventListener('input', e => renderProducts(e.target.value));
+
+  document.getElementById('productModal').addEventListener('show.bs.modal', event => {
+    const product = products.find(p => p.id == event.relatedTarget.getAttribute('data-id'));
+    document.getElementById('modal-product-name').textContent = product.name;
+    document.getElementById('modal-product-image').src = product.image;
+    document.getElementById('modal-product-description').textContent = product.description;
+    document.getElementById('modal-product-price').textContent = `R$ ${product.price.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;
+    document.getElementById('add-to-cart-btn').onclick = () => { cart.push(product); saveCart(); };
+  });
+
+  document.getElementById('open-cart').addEventListener('click', () => {
+    renderCart();
+    new bootstrap.Modal(document.getElementById('cartModal')).show();
+  });
+
+  renderProducts();
+  updateCartCount();
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 10);
+    document.getElementById('back-to-top').style.display = window.scrollY > 300 ? 'flex' : 'none';
+  });
+  document.getElementById('back-to-top').addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
